@@ -1,3 +1,14 @@
+set(SDL2_ROOT_DIR "/opt/homebrew/Cellar/sdl2/2.30.11")
+
+include_directories(${SDL2_ROOT_DIR}/include/SDL2)
+
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+
+# 包含 OpenGL 和 GLFW 的头文件
+include_directories(${OPENGL_INCLUDE_DIR} ${GLFW_INCLUDE_DIRS})
+
+
 file(GLOB SOURCES Source/*.cpp Contrib/fastlz/fastlz.c)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -69,9 +80,9 @@ endif()
 
 add_dependencies(RecastDemo DebugUtils Detour DetourCrowd DetourTileCache Recast)
 if(APPLE)
-  target_link_libraries(RecastDemo ${OPENGL_LIBRARIES} ${SDL2_LIBRARY} DebugUtils Detour DetourCrowd DetourTileCache Recast)
+  target_link_libraries(RecastDemo ${OPENGL_LIBRARIES} ${SDL2_LIBRARY} glfw DebugUtils Detour DetourCrowd DetourTileCache Recast)
 else()
-  target_link_libraries(RecastDemo ${OPENGL_LIBRARIES} SDL2::SDL2main DebugUtils Detour DetourCrowd DetourTileCache Recast)
+  target_link_libraries(RecastDemo ${OPENGL_LIBRARIES} SDL2::SDL2main glfw DebugUtils Detour DetourCrowd DetourTileCache Recast)
 endif()
 
 
